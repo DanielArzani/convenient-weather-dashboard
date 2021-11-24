@@ -18,3 +18,16 @@ header h1 {
 .card {
   background-color: #33465a;
 }
+
+/* UV Index colour changes */
+.favourable {
+  background-color: greenyellow;
+}
+
+.moderate {
+  background-color: orange;
+}
+
+.sever {
+  background-color: red;
+}
