@@ -4,7 +4,7 @@ header h1 {
 }
 
 /* Style for form button */
-form button {
+.cus-col {
   background-color: #5ba1e9;
   color: white;
 }
