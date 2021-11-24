@@ -26,6 +26,13 @@ const currentHumidity = document.querySelector(".current-humidity");
 // Current UV Index
 const currentUV = document.querySelector(".current-uv");
 
+// Future Temp
+const temp = document.querySelectorAll(".temp");
+// Future Wind
+const wind = document.querySelectorAll(".wind");
+// Future Humidity
+const humidity = document.querySelectorAll(".humidity");
+
 //* FUNCTIONS
 
 // Function that gives weather info
@@ -38,6 +45,9 @@ const weatherData = function (e) {
 
   // OneWeatherMap API URL with the city name typed and the api key
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${inputValue}&appid=${apiKey}&units=imperial&current`;
+
+  // Weather Forecast for more than one time stamp
+  const forecast = `https://api.openweathermap.org/data/2.5/forecast?q=${inputValue}&appid=${apiKey}&units=imperial&current&cnt=5`;
 
   // Fetch weather data
   fetch(url)
@@ -70,6 +80,23 @@ const weatherData = function (e) {
     }) //TODO: Get this to display for invalid responses!
     .catch(function (err) {
       console.log("ERROR");
+    });
+
+  //^MULTI FORCASTS
+  fetch(forecast)
+    .then(function (res) {
+      return res.json();
+    })
+    .then(function (data) {
+      // LOOP THROUGH ARRAY AND SET VALUES FOR TEMP WIND AND HUMIDITY
+      data.list.forEach(function (value, index) {
+        temp[index].textContent = `Temp: ${value.main.temp}°F`;
+        wind[index].textContent = `Wind:${value.wind.speed} MPH`;
+        humidity[index].textContent = `Humidity: ${value.main.humidity} %`;
+      });
+    })
+    .catch(function (err) {
+      console.log(err);
     });
 };
 
