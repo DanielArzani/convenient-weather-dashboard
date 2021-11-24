@@ -13,3 +13,8 @@ header h1 {
 .bdr-line {
   border: 1px solid;
 }
+
+/* Background colour for future forecast cards */
+.card {
+  background-color: #33465a;
+}

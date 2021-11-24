@@ -26,11 +26,11 @@
     <!-- FLEX CONTAINER FOR BOTH SECTIONS -->
     <div class="row">
       <!-- INPUT FORM SECTION -->
-      <div class="container row col-3">
-        <!-- Header -->
-        <h2>Search for a City:</h2>
+      <div class="container row col-3 mx-2">
         <!-- Form -->
         <form>
+          <!-- Header -->
+          <h2>Search for a City:</h2>
           <input
             type="text"
             class="form-control"
@@ -51,12 +51,33 @@
         </form>
       </div>
 
+      <!-- WEATHER SECTION -->
       <div class="container row col-9">
+        <!-- Current Weather -->
         <div class="border">
-          <h2>Atlanta <span id="current-time"></span></h2>
+          <h2 id="weatherToday">
+            <span class="location h2">Toronto</span>
+            <span id="current-time">(11/23/2021)</span>
+          </h2>
+          <p>Temp: 74.01F</p>
+          <p>Wind: 6.67MPH</p>
+          <p>Humidity: 46%</p>
+          <p>UV Index: <button>0.37</button></p>
         </div>
+        <!-- Future Weather -->
         <div>
           <h3>5-Day Forecast:</h3>
+        </div>
+        <div class="row gap-3">
+          <div class="card col-2">
+            <div class="card-body text-white">
+              <h5 class="date">11/24/2021</h5>
+              <!-- Icon goes here -->
+              <p class="temp">Temp: 74.01F</p>
+              <p class="wind">Wind: 6.67MPH</p>
+              <p class="humidity">Humidity: 46%</p>
+            </div>
+          </div>
         </div>
       </div>
       <!-- END -->
