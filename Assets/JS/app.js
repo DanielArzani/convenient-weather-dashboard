@@ -17,6 +17,14 @@ const searchHistory = document.querySelector("#search-history");
 
 // City Name in Current Weather Section
 const currentLocation = document.querySelector(".location");
+// Current Temp
+const currentTemp = document.querySelector(".current-temp");
+// Current Wind
+const currentWind = document.querySelector(".current-wind");
+// Current Humidity
+const currentHumidity = document.querySelector(".current-humidity");
+// Current UV Index
+const currentUV = document.querySelector(".current-uv");
 
 //* FUNCTIONS
 
@@ -29,7 +37,7 @@ const weatherData = function (e) {
   const inputValue = input.value;
 
   // OneWeatherMap API URL with the city name typed and the api key
-  const url = `https://api.openweathermap.org/data/2.5/weather?q=${inputValue}&appid=${apiKey}&units=metric`;
+  const url = `https://api.openweathermap.org/data/2.5/weather?q=${inputValue}&appid=${apiKey}&units=imperial&current`;
 
   // Fetch weather data
   fetch(url)
@@ -38,7 +46,7 @@ const weatherData = function (e) {
     })
     .then(function (data) {
       console.log(data);
-      console.log(data.name);
+      console.log(data.main.humidity);
       // Adds city name to current weather section
       currentLocation.textContent = data.name;
       // Adds city name to search history button
@@ -53,6 +61,12 @@ const weatherData = function (e) {
       );
       span.textContent = data.name;
       searchHistory.append(span);
+      // Sets TEMP,WIND,HUMIDITY,UV-INDEX values in current weather section
+      currentTemp.textContent = `Temp: ${data.main.temp}°F`;
+      currentWind.textContent = `Wind: ${data.wind.speed} MPH`;
+      currentHumidity.textContent = `Humidity: ${data.main.humidity} %`;
+      // TODO ASK ABOUT HOW TO GET UV INDEX
+      //   currentUV.textContent = ``;
     }) //TODO: Get this to display for invalid responses!
     .catch(function (err) {
       console.log("ERROR");
