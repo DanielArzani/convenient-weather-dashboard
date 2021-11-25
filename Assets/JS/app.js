@@ -1,10 +1,3 @@
-//todo: ADD ICONS TO CARDS
-//todo: MAKE IT SO THAT SEARCH HISTORY ARRAY RESETS TO 0 UPON REFRESH IF EVEN IF MAX NUMBER OF SEARCH BUTTONS HASNT BEEN REACHED
-//todo: MAKE BUTTONS RESPONSIVE
-//todo: FIX RESPONSIVENESS ON CARDS
-//todo: DELETE UNEEDED CODE
-//todo: MAKE IT SO THAT THERE IS ONLY ONE ERROR MESSAGE, NOT 2!
-
 //* VARIABLES
 //^ Search
 // Form
@@ -122,7 +115,7 @@ function weatherData(cityname) {
 //& MULTI-DAY WEATHER FORECAST
 // Gets the 5 day forecast
 function multiForecast(cityname) {
-  // Within the data there are 40 timestamps 3 hours apart each, you can pick the days you want from the list
+  // Within the data there are 40 timestamps 3 hours apart each, you can pick the days you want from the array
   fetch(
     `https://api.openweathermap.org/data/2.5/forecast?q=${cityname}&appid=${apiKey}&units=imperial`
   )
@@ -130,16 +123,12 @@ function multiForecast(cityname) {
       return res.json();
     })
     .then(function (data) {
-      if (data.cod === "404") {
-        alert("city not found");
-        return;
-      }
       // Calls function that displays the weather values
       forecastDisplay(data);
     });
 
   // Will display the values and icons for all 5 days
-  // Given is a long list and only few of those list items are required so there won't be a loop
+  // Given is a long array and only few of those array items are required so there won't be a loop
   function forecastDisplay(forecast) {
     console.log(forecast);
     // forecast.list[index].weather[0].icon
