@@ -1,4 +1,9 @@
-//todo: DO I WANT TO SET THE INITIAL DATE TO N/A OR USE MOMENT.JS JUST FOR THAT?
+//todo: ADD ICONS TO CARDS
+//todo: MAKE IT SO THAT SEARCH HISTORY ARRAY RESETS TO 0 UPON REFRESH IF EVEN IF MAX NUMBER OF SEARCH BUTTONS HASNT BEEN REACHED
+//todo: MAKE BUTTONS RESPONSIVE
+//todo: FIX RESPONSIVENESS ON CARDS
+//todo: DELETE UNEEDED CODE
+//todo: MAKE IT SO THAT THERE IS ONLY ONE ERROR MESSAGE, NOT 2!
 
 //* VARIABLES
 //^ Search
@@ -11,7 +16,7 @@ const searchBtn = document.querySelector("#search-btn");
 // API Key
 const apiKey = "39e9d7b8c29775b4c2b37ed1510b744a";
 // Search History
-const searchHistory = document.querySelector("#search-history");
+const searchHistoryBtn = document.querySelector("#search-history");
 
 //^ Current Weather
 // Current Date
@@ -28,6 +33,8 @@ const currentHumidity = document.querySelector(".current-humidity");
 const currentUV = document.querySelector(".current-uv");
 
 //^ Future Weather
+// Weather Icon
+const weatherIcon = document.querySelectorAll(".weather-icon");
 // Future Temp
 const temp = document.querySelectorAll(".temp");
 // Future Wind
@@ -38,24 +45,16 @@ const humidity = document.querySelectorAll(".humidity");
 const dates = document.querySelectorAll(".date");
 
 //^ Other
-// Set date
-// currentDate.textContent = moment();
+// Sets current date and time until city is picked, then format is changed to match mock up
+currentDate.textContent = moment().format("llll");
 
 // Lon and lat
 let lon;
 let lat;
 
-//^ APIs
-// OneWeatherMap API URL with the city name typed and the api key
-// const weatherURL = `https://api.openweathermap.org/data/2.5/weather?q=${inputValue}&appid=${apiKey}&units=imperial&current`;
-
-// // Geolocation API
-// const geoURL = `http://api.openweathermap.org/geo/1.0/direct?q=${inputValue},&limit=1&appid=${apiKey}`;
-
-// // Weather Forecast for more than one time stamp
-// const forecast = `https://api.openweathermap.org/data/2.5/forecast?q=${inputValue}&appid=${apiKey}&units=imperial&current&cnt=5`;
-
-// const oneCall = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=current,minutely,hourly,alerts&appid=${apiKey}`;
+//^ Storage
+// Checking if storage is empty and if it is get an empty array, if not get what ever is in there
+const searchHistory = JSON.parse(localStorage.getItem("search-list")) || [];
 
 //* FUNCTIONS
 
@@ -102,7 +101,7 @@ function weatherData(cityname) {
 
   // Displays the values in the current weather section (except for uv)
   function displayWeather(currentWeather) {
-    // Gets the time and displays it
+    // Gets the date and displays it
     const thisDate = new Date(currentWeather.dt * 1000);
     const day = thisDate.getDate();
     const month = thisDate.getMonth() + 1;
@@ -131,7 +130,6 @@ function multiForecast(cityname) {
       return res.json();
     })
     .then(function (data) {
-      console.log(data);
       if (data.cod === "404") {
         alert("city not found");
         return;
@@ -143,6 +141,8 @@ function multiForecast(cityname) {
   // Will display the values and icons for all 5 days
   // Given is a long list and only few of those list items are required so there won't be a loop
   function forecastDisplay(forecast) {
+    console.log(forecast);
+    // forecast.list[index].weather[0].icon
     //^ DAY 1
     // Setting the date
     const day1Date = new Date(forecast.list[7].dt * 1000);
@@ -150,7 +150,12 @@ function multiForecast(cityname) {
     var forecastMonth = day1Date.getMonth() + 1;
     var forecastYear = day1Date.getFullYear();
     dates[0].textContent = `${forecastMonth}/${forecastDay}/${forecastYear}`;
-    //* Setting the icon
+    // Setting the icon
+    let weatherPic1 = forecast.list[4].weather[0].icon;
+    weatherIcon[0].setAttribute(
+      "src",
+      "https://openweathermap.org/img/wn/" + weatherPic1 + "@2x.png"
+    );
     // Setting the temp
     temp[0].textContent = `Temp: ${forecast.list[7].main.temp}°F`;
     // Setting the wind
@@ -164,7 +169,12 @@ function multiForecast(cityname) {
     var forecastMonth2 = day2Date.getMonth() + 1;
     var forecastYear2 = day2Date.getFullYear();
     dates[1].textContent = `${forecastMonth2}/${forecastDay2}/${forecastYear2}`;
-    //* Setting the icon
+    // Setting the icon
+    let weatherPic2 = forecast.list[15].weather[0].icon;
+    weatherIcon[1].setAttribute(
+      "src",
+      "https://openweathermap.org/img/wn/" + weatherPic2 + "@2x.png"
+    );
     // Setting the temp
     temp[1].textContent = `Temp: ${forecast.list[15].main.temp}°F`;
     // Setting the wind
@@ -178,7 +188,12 @@ function multiForecast(cityname) {
     var forecastMonth3 = day3Date.getMonth() + 1;
     var forecastYear3 = day3Date.getFullYear();
     dates[2].textContent = `${forecastMonth3}/${forecastDay3}/${forecastYear3}`;
-    //* Setting the icon
+    // Setting the icon
+    let weatherPic3 = forecast.list[23].weather[0].icon;
+    weatherIcon[2].setAttribute(
+      "src",
+      "https://openweathermap.org/img/wn/" + weatherPic3 + "@2x.png"
+    );
     // Setting the temp
     temp[2].textContent = `Temp: ${forecast.list[23].main.temp}°F`;
     // Setting the wind
@@ -192,7 +207,12 @@ function multiForecast(cityname) {
     var forecastMonth4 = day4Date.getMonth() + 1;
     var forecastYear4 = day4Date.getFullYear();
     dates[3].textContent = `${forecastMonth4}/${forecastDay4}/${forecastYear4}`;
-    //* Setting the icon
+    // Setting the icon
+    let weatherPic4 = forecast.list[31].weather[0].icon;
+    weatherIcon[3].setAttribute(
+      "src",
+      "https://openweathermap.org/img/wn/" + weatherPic4 + "@2x.png"
+    );
     // Setting the temp
     temp[3].textContent = `Temp: ${forecast.list[31].main.temp}°F`;
     // Setting the wind
@@ -207,6 +227,11 @@ function multiForecast(cityname) {
     var forecastYear5 = day5Date.getFullYear();
     dates[4].textContent = `${forecastMonth5}/${forecastDay5}/${forecastYear5}`;
     //* Setting the icon
+    let weatherPic5 = forecast.list[39].weather[0].icon;
+    weatherIcon[4].setAttribute(
+      "src",
+      "https://openweathermap.org/img/wn/" + weatherPic5 + "@2x.png"
+    );
     // Setting the temp
     temp[4].textContent = `Temp: ${forecast.list[39].main.temp}°F`;
     // Setting the wind
@@ -216,6 +241,29 @@ function multiForecast(cityname) {
   }
 }
 //& END OF MULTI FORECAST
+
+//^ Create Search History Buttons
+function createSearchBtns(name) {
+  // Adds city name to search history button
+  if (searchHistory.length <= 6) {
+    const span = document.createElement("span");
+    span.classList.add(
+      "city-name",
+      "py-1",
+      "my-2",
+      "w-100",
+      "btn",
+      "bg-secondary",
+      "history"
+    );
+    span.textContent = name;
+    searchHistoryBtn.append(span);
+    // console.log(searchHistory);
+  } else {
+    // Clears storage
+    localStorage.clear();
+  }
+}
 
 //*EVENT LISTENERS
 
@@ -229,4 +277,14 @@ form.addEventListener("submit", function (e) {
   weatherData(inputValue);
   // Call several weather forecasts
   multiForecast(inputValue);
+  // Add input into local storage
+  searchHistory.push(inputValue);
+  localStorage.setItem("search-list", JSON.stringify(searchHistory));
+  // Call function that adds search history buttons
+  createSearchBtns(inputValue);
+  //FIXME: Suppose to make it so that when you click on the history it will find it
+  searchHistoryBtn.addEventListener("click", function () {
+    weatherData(inputValue);
+    multiForecast(inputValue);
+  });
 });
