@@ -264,7 +264,7 @@ form.addEventListener("submit", function (e) {
   // Prevents page from re-loading
   e.preventDefault();
   // Variable that stores value of what is submitted through the form
-  const inputValue = input.value;
+  let inputValue = input.value;
   // Call current weather function
   weatherData(inputValue);
   // Call several weather forecasts
@@ -275,8 +275,10 @@ form.addEventListener("submit", function (e) {
   // Call function that adds search history buttons
   createSearchBtns(inputValue);
   //FIXME: Suppose to make it so that when you click on the history it will find it
-  searchHistoryBtn.addEventListener("click", function () {
-    weatherData(inputValue);
-    multiForecast(inputValue);
-  });
+  // searchHistoryBtn.addEventListener("click", function () {
+  //   weatherData(inputValue);
+  //   multiForecast(inputValue);
+  // });
+  //^ Resets the form, specifically the value in the input field
+  // form.reset();
 });
