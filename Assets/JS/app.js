@@ -234,7 +234,7 @@ function multiForecast(cityname) {
 // Create Search History Buttons
 function createSearchBtns(name) {
   // Limits the amount of search history buttons to 6
-  if (searchHistory.length <= 9) {
+  if (searchHistory.length <= 7) {
     // Creates the history buttons and adds classes and their textContent
     const span = document.createElement("span");
     span.classList.add(
@@ -254,6 +254,20 @@ function createSearchBtns(name) {
     localStorage.clear();
     searchHistory = JSON.parse(localStorage.getItem("search-list")) || [];
     searchHistoryBtn.innerHTML = ``;
+    // There was a problem where after the number of search history buttons reached 7 and when the form was submitted again although it brought up the weather it didn't create the first history button, this makes it so that the previous value would persist even after the local storage refreshes
+    const span = document.createElement("span");
+    span.classList.add(
+      "city-name",
+      "py-1",
+      "my-2",
+      "w-100",
+      "btn",
+      "bg-secondary",
+      "history"
+    );
+    span.textContent = name;
+    // Appends city name to search history button div
+    searchHistoryBtn.append(span);
   }
 }
 
