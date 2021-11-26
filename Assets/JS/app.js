@@ -47,7 +47,7 @@ let lat;
 
 //^ Storage
 // Checking if storage is empty and if it is get an empty array, if not get what ever is in there
-const searchHistory = JSON.parse(localStorage.getItem("search-list")) || [];
+let searchHistory = JSON.parse(localStorage.getItem("search-list")) || [];
 
 //* FUNCTIONS
 
@@ -233,8 +233,9 @@ function multiForecast(cityname) {
 
 //^ Create Search History Buttons
 function createSearchBtns(name) {
-  // Adds city name to search history button
+  // Limits the amount of search history buttons to 6
   if (searchHistory.length <= 6) {
+    // Creates the history buttons and adds classes and their textContent
     const span = document.createElement("span");
     span.classList.add(
       "city-name",
@@ -246,11 +247,13 @@ function createSearchBtns(name) {
       "history"
     );
     span.textContent = name;
+    // Appends city name to search history button div
     searchHistoryBtn.append(span);
-    // console.log(searchHistory);
   } else {
-    // Clears storage
+    // Resets storage and search history div
     localStorage.clear();
+    searchHistory = JSON.parse(localStorage.getItem("search-list")) || [];
+    searchHistoryBtn.innerHTML = ``;
   }
 }
 
