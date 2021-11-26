@@ -231,7 +231,7 @@ function multiForecast(cityname) {
 }
 //& END OF MULTI FORECAST
 
-//^ Create Search History Buttons
+// Create Search History Buttons
 function createSearchBtns(name) {
   // Limits the amount of search history buttons to 6
   if (searchHistory.length <= 6) {
@@ -257,6 +257,15 @@ function createSearchBtns(name) {
   }
 }
 
+// Fetchs weather data using search history
+function search(e) {
+  // When button is clicked, its text (the city name) is acquired
+  target = e.target.textContent;
+  // Calls functions that fetch the weather data and display it
+  weatherData(target);
+  multiForecast(target);
+}
+
 //*EVENT LISTENERS
 
 // When form hear submit event it will call the weatherData function
@@ -274,11 +283,9 @@ form.addEventListener("submit", function (e) {
   localStorage.setItem("search-list", JSON.stringify(searchHistory));
   // Call function that adds search history buttons
   createSearchBtns(inputValue);
-  //FIXME: Suppose to make it so that when you click on the history it will find it
-  // searchHistoryBtn.addEventListener("click", function () {
-  //   weatherData(inputValue);
-  //   multiForecast(inputValue);
-  // });
-  //^ Resets the form, specifically the value in the input field
-  // form.reset();
+  // Resets the form, specifically the value in the input field
+  form.reset();
 });
+
+// When a search history button is clicked on it will fetch the corresponding weather data and display it
+searchHistoryBtn.addEventListener("click", search);
