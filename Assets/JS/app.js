@@ -234,7 +234,7 @@ function multiForecast(cityname) {
 // Create Search History Buttons
 function createSearchBtns(name) {
   // Limits the amount of search history buttons to 6
-  if (searchHistory.length <= 6) {
+  if (searchHistory.length <= 9) {
     // Creates the history buttons and adds classes and their textContent
     const span = document.createElement("span");
     span.classList.add(
@@ -257,7 +257,7 @@ function createSearchBtns(name) {
   }
 }
 
-// Fetchs weather data using search history
+// Fetches weather data using search history
 function search(e) {
   // When button is clicked, its text (the city name) is acquired
   target = e.target.textContent;
@@ -265,6 +265,14 @@ function search(e) {
   weatherData(target);
   multiForecast(target);
 }
+
+// When a search history button is clicked on it will fetch the corresponding weather data and display it
+searchHistoryBtn.addEventListener("click", search);
+
+// Makes it so that the search history is rendered even if the page is refreshed
+searchHistory.forEach(function (element) {
+  createSearchBtns(element);
+});
 
 //*EVENT LISTENERS
 
@@ -286,6 +294,3 @@ form.addEventListener("submit", function (e) {
   // Resets the form, specifically the value in the input field
   form.reset();
 });
-
-// When a search history button is clicked on it will fetch the corresponding weather data and display it
-searchHistoryBtn.addEventListener("click", search);
